@@ -1,0 +1,21 @@
+<!-- sidebar -->
+    <div class="aside fl">
+        <ul class="menu list-unstyled">
+            <li>
+                <a class="item active" href="user.html">
+					<span class="glyphicon glyphicon-user"></span>
+					User management
+				</a>
+            </li>
+            <li>
+                <a class="item" href="article.html">
+			  		<span class="glyphicon glyphicon-th-list"></span>
+			  		Article management
+			  	</a>
+            </li>
+        </ul>
+        <div class="cprt">
+            Powered by <a href="http://www.itheima.com/" target="_blank">Lu's Blog</a>
+        </div>
+    </div>
+<!-- sidebar -->
