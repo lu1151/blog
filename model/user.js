@@ -1,4 +1,5 @@
 const mongo = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // create schema
 const userSchema = mongo.Schema({
@@ -32,19 +33,21 @@ const userSchema = mongo.Schema({
 // create set
 const BlogUser = mongo.model("BlogUser", userSchema);
 
-// BlogUser.create({
-//     username: "lu1151",
-//     email: "luxi.li@outlook.com",
-//     password: "12345678",
-//     role: "admin",
-//     state:0
-// }).then(()=>{
-//     console.log("Create user succeed");
-// }).catch(()=>{
-//     console.log("Create user failed");
-// })
+// async function createUser() {
+//     const salt = await bcrypt.genSalt(10);
+//     const pwd = await bcrypt.hash("12345678", salt);
+//     const user = await BlogUser.create({
+//         username: "lu1151",
+//         email: "luxi.li@outlook.com",
+//         password: pwd,
+//         role: "admin",
+//         state: 0
+//     });
+// }
+
+// createUser();
 
 // export User module
-module.exports={
+module.exports = {
     BlogUser
 }

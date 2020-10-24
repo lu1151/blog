@@ -3,6 +3,9 @@ const express = require("express");
 // require BlogUser
 const { BlogUser } = require("../model/user");
 
+// require bcrypt
+const bcrypt = require("bcrypt");
+
 const admin = express.Router();
 
 admin.get("/login", (req, res) => {
@@ -16,11 +19,13 @@ admin.post("/login", async (req, res) => {
     }
     let user = await BlogUser.findOne({ email });
     if (user) {
-        if (password == user.password) {
-            res.send("Logged in")
+        let psw = await bcrypt.compare(password, user.password);
+        if (psw) {
+            req.session.username = user.username;
+            req.app.locals.userInfo = user;
+            res.redirect("/admin/user");
         } else {
             return res.status(400).render("admin/error", { msg: "Email or password error" });
-
         }
     } else {
         return res.status(400).render("admin/error", { msg: "Email or password error" });
@@ -28,7 +33,7 @@ admin.post("/login", async (req, res) => {
 });
 
 admin.get("/user", (req, res) => {
-    res.render("admin/user")
+    res.render("admin/user");
 })
 
 module.exports = admin;

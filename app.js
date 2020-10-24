@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 
 
 // create server
@@ -10,7 +11,14 @@ const app = express();
 require("./model/connect")
 
 // get data from post
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// set session
+app.use(session({
+    secret: "secret key",
+    resave: true,
+    saveUninitialized: true
+}));
 
 // set template path
 app.set("views", path.join(__dirname, "views"));
@@ -27,6 +35,15 @@ app.use(express.static(path.join(__dirname, "public")));
 const home = require("./route/home");
 const admin = require("./route/admin");
 const { extension } = require("art-template");
+
+// Intercept requests
+app.use("/admin", (req, res, next) => {
+    if (req.url != "/login" && !req.session.username) {
+        res.redirect("/admin/login");
+    } else {
+        next();
+    }
+})
 
 app.use("/home", home);
 app.use("/admin", admin);
